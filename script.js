@@ -1,21 +1,9 @@
-var cart = [];
-
-// Try to get the elements from the page
-var servicesList = document.getElementById('servicesList');
-var cartItems = document.getElementById('cartItems');
-var totalAmount = document.getElementById('totalAmount');
-var bookBtn = document.getElementById('bookNow');
-var fullName = document.getElementById('fullName');
-var email = document.getElementById('email');
-var phone = document.getElementById('phone');
-var scrollServices = document.getElementById('scrollServices');
-var orderForm = document.getElementById('orderForm');
-var orderIdField = document.getElementById('order_id');
-var servicesField = document.getElementById('servicesHidden');
-var totalField = document.getElementById('totalHidden');
+var cart;
 
 // add and remove functionality for the services
 function setupServiceButtons() {
+  if (!cart) cart = [];
+  var servicesList = document.getElementById('servicesList');
   var serviceRows = servicesList.querySelectorAll('.service');
   for (var i = 0; i < serviceRows.length; i++) {
     var row = serviceRows[i];
@@ -63,6 +51,8 @@ function setupServiceButtons() {
 
 // We are showing all the items in the cart
 function showCart() {
+  var cartItems = document.getElementById('cartItems');
+  var totalAmount = document.getElementById('totalAmount');
   var template = cartItems.querySelector('.cart-row-template');
   var emptyDiv = cartItems.querySelector('.empty');
   cartItems.innerHTML = '';
@@ -90,6 +80,10 @@ function showCart() {
 
 // Checking if we can enable the book button if all the fields are filled and service is added
 function checkBookState() {
+  var fullName = document.getElementById('fullName');
+  var email = document.getElementById('email');
+  var phone = document.getElementById('phone');
+  var bookBtn = document.getElementById('bookNow');
   var filled = false;
   if (fullName.value.trim() !== '' && email.checkValidity() && phone.value.trim().length >= 7) {
     filled = true;
@@ -105,9 +99,9 @@ function checkBookState() {
   }
 }
 
-fullName.addEventListener('input', checkBookState);
-email.addEventListener('input', checkBookState);
-phone.addEventListener('input', checkBookState);
+document.getElementById('fullName').addEventListener('input', checkBookState);
+document.getElementById('email').addEventListener('input', checkBookState);
+document.getElementById('phone').addEventListener('input', checkBookState);
 
 // creating a renadom order id to send in the mail.
 function makeOrderId() {
@@ -131,7 +125,7 @@ function getCartSummary() {
 
 
 //booking form submit
-orderForm.addEventListener('submit', function(e) {
+document.getElementById('orderForm').addEventListener('submit', function(e) {
   e.preventDefault();
   if (cart.length === 0) {
     alert('Please add at least one service before booking.');
@@ -140,6 +134,10 @@ orderForm.addEventListener('submit', function(e) {
 
   var summary = getCartSummary();
   var orderId = makeOrderId();
+  var orderIdField = document.getElementById('order_id');
+  var servicesField = document.getElementById('servicesHidden');
+  var totalField = document.getElementById('totalHidden');
+  var bookBtn = document.getElementById('bookNow');
   orderIdField.value = orderId;
   servicesField.value = summary.items;
   totalField.value = '₹' + summary.total;
@@ -150,11 +148,12 @@ orderForm.addEventListener('submit', function(e) {
 
   var bookingMsg = document.getElementById('bookingMessage');
   var emailMsg = document.getElementById('emailMessage');
+  var email = document.getElementById('email');
   bookingMsg.textContent = '';
   emailMsg.textContent = '';
 
   if (window.sendBookingEmail) {
-    window.sendBookingEmail(orderForm)
+    window.sendBookingEmail(document.getElementById('orderForm'))
       .then(function() {
         bookingMsg.textContent = 'Thank you For Booking the Service. We will get back to you soon!';
         emailMsg.textContent = 'Confirmation mail has been sent to ' + email.value + '.';
@@ -162,7 +161,7 @@ orderForm.addEventListener('submit', function(e) {
           bookingMsg.textContent = '';
           emailMsg.textContent = '';
         }, 15000);
-        orderForm.reset();
+        document.getElementById('orderForm').reset();
         cart = [];
         setupServiceButtons();
         showCart();
