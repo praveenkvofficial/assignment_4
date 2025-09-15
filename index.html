@@ -1,116 +1,192 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
+  <title>Laundry Service App</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Laundry Services Web App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
+  <!-- EmailJS library -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
-<header>
-  <nav class="container">
-    <div class="logo">Logo</div>
-    <div class="links">
-      <a href="#home">Home</a>
-      <a href="#services">Services</a>
-      <a href="#about">About Us</a>
-      <a href="#contact">Contact Us</a>
+  <!-- Navigation  --Menu-->
+  <header>
+    <nav class="container">
+      <div class="logo">Logo</div>
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact Us</a>
+      </div>
+      <div class="username">Username</div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <h1>Welcome to Laundry Services!</h1>
+      <p>We clean your clothes and deliver them fresh. Try our services today!</p>
+  <button id="scrollServices" onclick="scrollToServices()">Book a service today!</button>
     </div>
-    <div class="username">Username</div>
-  </nav>
-</header>
+    <div class="hero-right">
+      <img src="https://png.pngtree.com/png-clipart/20240512/original/pngtree-home-service-house-cleaning-and-laundry-wash-png-image_15072814.png" alt="Washing machine">
+    </div>
+  </section>
 
-<section class="hero" id="home">
-  <div class="hero-left">
-    <h1>Revitalize Your Clothes with Expert <span style="color:var(--blue)">Laundry Services!</span></h1>
-    <p>From premium dry cleaning to swift wash and fold, we deliver care and convenience. Schedule a pickup and rediscover the freshness of your clothes today!</p>
-    <button id="scrollServices">Book a service today!</button>
-  </div>
-  <div class="hero-right">
-    <img src="https://png.pngtree.com/png-clipart/20240512/original/pngtree-home-service-house-cleaning-and-laundry-wash-png-image_15072814.png" alt="Washing machine">
-  </div>
-</section>
-
-<div class="achievements">
-  <div class="ach-wrap">
-    <div class="ach"><h2>15+</h2><p>Laundry Services</p></div>
-    <div class="ach"><h2>240+</h2><p>Happy Customers</p></div>
-    <div class="ach"><h2>2+ Yrs</h2><p>Experience</p></div>
-  </div>
-</div>
-
-<section class="booking" id="services">
-  <div class="services-card">
-    <h2>Our Services</h2>
-    <div id="servicesList"></div>
-    <p class="hint">Click on Add to Cart to add services to your cart</p>
+  <!-- Achievements -->
+  <div class="achievements">
+    <div class="ach-wrap">
+      <div class="ach"><h2>15+</h2><p>Laundry Services</p></div>
+      <div class="ach"><h2>240+</h2><p>Happy Customers</p></div>
+      <div class="ach"><h2>2+ Yrs</h2><p>Experience</p></div>
+    </div>
   </div>
 
-  <div class="cart-card">
-    <h3>Added Items</h3>
-    <div id="cartItems" class="cart-items"><div class="empty">No items added yet.</div></div>
-    <div class="total"><span>Total Amount</span><span id="totalAmount">₹0</span></div>
-    <form>
-      <label>Full Name</label>
-      <input type="text" id="fullName" required>
-      <label>Email</label>
-      <input type="email" id="email" required>
-      <label>Phone Number</label>
-      <input type="tel" id="phone" required>
-      <button id="bookNow" disabled>Book now</button>
+  <!-- Booking Section -->
+  <section class="booking" id="services">
+    <div class="services-card">
+      <h2>Our Services</h2>
+      <div id="servicesList">
+        <div class="service" data-id="1">
+          <div class="service-left">
+            <img class="service-icon" src="https://cdn-icons-png.flaticon.com/512/3209/3209156.png" alt="Dry Cleaning">
+            <div class="service-name">Dry Cleaning</div>
+          </div>
+          <div class="service-price">₹200</div>
+          <button>Add Item</button>
+        </div>
+        <div class="service" data-id="2">
+          <div class="service-left">
+            <img class="service-icon" src="https://cdn-icons-png.flaticon.com/512/2974/2974990.png" alt="Wash & Fold">
+            <div class="service-name">Wash & Fold</div>
+          </div>
+          <div class="service-price">₹300</div>
+          <button>Add Item</button>
+        </div>
+        <div class="service" data-id="3">
+          <div class="service-left">
+            <img class="service-icon" src="https://cdn-icons-png.flaticon.com/512/1047/1047717.png" alt="Ironing">
+            <div class="service-name">Ironing</div>
+          </div>
+          <div class="service-price">₹150</div>
+          <button>Add Item</button>
+        </div>
+        <div class="service" data-id="4">
+          <div class="service-left">
+            <img class="service-icon" src="https://cdn-icons-png.flaticon.com/512/4903/4903428.png" alt="Stain Removal">
+            <div class="service-name">Stain Removal</div>
+          </div>
+          <div class="service-price">₹250</div>
+          <button>Add Item</button>
+        </div>
+        <div class="service" data-id="5">
+          <div class="service-left">
+            <img class="service-icon" src="https://cdn-icons-png.flaticon.com/512/1188/1188631.png" alt="Leather & Suede Cleaning">
+            <div class="service-name">Leather & Suede Cleaning</div>
+          </div>
+          <div class="service-price">₹899</div>
+          <button>Add Item</button>
+        </div>
+        <div class="service" data-id="6">
+          <div class="service-left">
+            <img class="service-icon" src="https://cdn-icons-png.flaticon.com/512/2488/2488630.png" alt="Wedding Dress Cleaning">
+            <div class="service-name">Wedding Dress Cleaning</div>
+          </div>
+          <div class="service-price">₹2500</div>
+          <button>Add Item</button>
+        </div>
+      </div>
+      <p class="hint">Click on Add to Cart to add services to your cart</p>
+    </div>
+
+    <div class="cart-card">
+      <h3>Added Items</h3>
+      <div id="cartItems" class="cart-items">
+        <div class="empty">No items added yet.</div>
+        <div class="cart-row cart-row-template" style="display:none;">
+          <span class="cart-item-name"></span><span class="cart-item-price"></span>
+        </div>
+      </div>
+      <div class="total"><span>Total Amount</span><span id="totalAmount">₹0</span></div>
+
+      <!-- Booking Form -->
+      <form id="orderForm">
+        <label>Full Name</label>
+        <input type="text" id="fullName" name="name" required>
+
+        <label>Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label>Phone Number</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <input type="hidden" name="order_id" id="order_id">
+        <input type="hidden" name="services" id="servicesHidden">
+        <input type="hidden" name="total" id="totalHidden">
+
+  <button id="bookNow" type="submit" disabled>Book now</button>
+  <div id="bookingMessage"></div>
+  <div id="emailMessage"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Qualities Section -->
+  <section class="qualities" id="about">
+    <div class="qualities-grid">
+      <div class="quality">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Premium Services">
+        <h4>Premium Services</h4>
+        <p>Best detergents and care for your clothes.</p>
+      </div>
+      <div class="quality">
+        <img src="https://cdn-icons-png.flaticon.com/512/724/724715.png" alt="Quick Support">
+        <h4>Quick Support</h4>
+        <p>We’re always ready to assist you.</p>
+      </div>
+      <div class="quality">
+        <img src="https://cdn-icons-png.flaticon.com/512/609/609361.png" alt="Hassle Free Delivery">
+        <h4>Hassle Free Delivery</h4>
+        <p>On-time pickup & delivery.</p>
+      </div>
+      <div class="quality">
+        <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Affordable Prices">
+        <h4>Affordable Prices</h4>
+        <p>Transparent pricing on all services.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <div class="newsletter" id="contact">
+    <form id="newsletterForm">
+      <input type="text" placeholder="Full name" required>
+      <input type="email" placeholder="Email" required>
+      <button type="submit">Subscribe</button>
     </form>
   </div>
-</section>
 
-<section class="qualities" id="about">
-  <div class="qualities-grid">
-    <div class="quality">
-      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Premium Services">
-      <h4>Premium Services</h4>
-      <p>Best detergents and care for your clothes.</p>
+  <!-- Footer -->
+  <footer>
+    <div class="footer-wrap">
+      <div>Logo<br><small>About Us</small></div>
+      <div>
+        <strong>Important Links</strong><br>
+        Contact Us<br>Privacy Policy<br>Terms of use
+      </div>
+      <div>
+        <strong>Contact</strong><br>
+        praveenkumarvaishnavofficial@gmail.com<br>
+        +91 9694191972
+      </div>
     </div>
-    <div class="quality">
-      <img src="https://cdn-icons-png.flaticon.com/512/724/724715.png" alt="Quick Support">
-      <h4>Quick Support</h4>
-      <p>We’re always ready to assist you.</p>
-    </div>
-    <div class="quality">
-      <img src="https://cdn-icons-png.flaticon.com/512/609/609361.png" alt="Hassle Free Delivery">
-      <h4>Hassle Free Delivery</h4>
-      <p>On-time pickup & delivery.</p>
-    </div>
-    <div class="quality">
-      <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Affordable Prices">
-      <h4>Affordable Prices</h4>
-      <p>Transparent pricing on all services.</p>
-    </div>
-  </div>
-</section>
+  </footer>
 
-<div class="newsletter" id="contact">
-  <form id="newsletterForm">
-    <input type="text" placeholder="Full name" required>
-    <input type="email" placeholder="Email" required>
-    <button type="submit">Subscribe</button>
-  </form>
-</div>
-
-<footer>
-  <div class="footer-wrap">
-    <div>Logo<br><small>About us text here</small></div>
-    <div>
-      <strong>Important Links</strong><br>
-      Contact Us<br>Privacy Policy<br>Terms of use
-    </div>
-    <div>
-      <strong>Contact</strong><br>
-      mail@example.com<br>
-      +91 98765 43210
-    </div>
-  </div>
-</footer>
-
-<script src="script.js"></script>
+  <!-- Main JS file -->
+  <script src="email.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
